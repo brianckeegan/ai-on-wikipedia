@@ -1,0 +1,67 @@
+# Pipeline configuration for AI on Wikipedia.
+# Keep parameters and paths here, not hard-coded in scripts. Override on the CLI
+# with e.g. `snakemake --config seed=123`.
+
+project: "ai-on-wikipedia"
+
+# Sent with every Wikimedia request. Wikimedia's User-Agent policy asks for a
+# way to contact you: replace with your own project URL and/or email.
+user_agent: "ai-on-wikipedia/0.1 (https://github.com/brianckeegan/ai-on-wikipedia)"
+
+# Minimum seconds between API requests (all endpoints). Raise it if you see throttling.
+http:
+  min_interval_seconds: 1.0
+
+paths:
+  raw: "data/raw"
+  interim: "data/interim"
+  processed: "data/processed"
+  results: "results"
+
+# Reproducibility: set a seed for any stochastic step (e.g. the relevance-audit sample).
+seed: 42
+
+# Observation window. The boundary is a descriptive period marker (ChatGPT's
+# public release, 2022-11-30, falls in the first post-period month), not a treatment.
+window:
+  start: "2020-11-01"     # pre-period: 24 months
+  boundary: "2022-11-01"  # first month of the post-period
+  end: "2026-09-30"       # last complete month before the LOI
+
+# Language editions. Ranked by user-agent pageviews in the reference month
+# (rule `rank_languages` writes the full ranking to results/tables/language_ranking.csv).
+# The list below is PINNED by hand after reviewing that table; see decision-log.md
+# (2026-10-09) for the preliminary ranking and the near-tie at ranks 19-22.
+languages:
+  rank_metric: "user_pageviews"
+  rank_month: "2022-10"
+  n: 20
+  candidates: [en, ja, es, ru, fr, de, it, zh, pt, ar, fa, pl, tr, nl, id, uk, sv, cs,
+               vi, ko, he, hi, fi, hu, th, el, ro, sr, bg, da, bn, ms, ca, no]
+  wikis: [en, ja, es, ru, fr, de, it, zh, pt, ar, fa, pl, tr, nl, id, uk, sv, cs, vi, ko]
+
+# Sampling frame: a bracketed design.
+#   narrow = English WikiProject Artificial Intelligence assessed articles (editor-curated)
+#   broad  = union of each language's own AI category tree, mapped through Wikidata
+frame:
+  wp1_snapshot: "data/raw/wp1_artificial_intelligence_2026-10-09.tsv"
+  wp1_project: "Artificial_Intelligence"
+  # Wikidata item for the category "Category:Artificial intelligence" (enwiki pageprops,
+  # 2026-10-09); each wiki's local root category is resolved from this item's sitelinks.
+  seed_category_qid: "Q558331"
+  # Local root-category overrides, used when a wiki has no sitelink on the item above.
+  root_category_overrides: {}
+  # Depth 1 chosen 2026-10-09 after a depth sweep: depth 2 drifts off-topic (decision-log.md).
+  category_depth: 1
+  audit_sample_per_bound: 200
+
+# mediawiki_history dumps: https://dumps.wikimedia.org/other/mediawiki_history/
+mediawiki_history:
+  snapshot: "2026-09"
+  base_url: "https://dumps.wikimedia.org/other/mediawiki_history"
+
+pageviews:
+  access: "all-access"
+  agent: "user"
+  granularity: "daily"
+  max_requests_per_second: 10

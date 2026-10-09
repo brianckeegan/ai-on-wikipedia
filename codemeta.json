@@ -1,0 +1,29 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "AI on Wikipedia",
+  "description": "A descriptive, cross-language analysis of how the production (article creation, revision, coauthorship) and consumption (pageviews) of AI-related Wikipedia articles changed across the 20 most-read Wikipedia language editions before and after November 2022.",
+  "codeRepository": "https://github.com/brianckeegan/ai-on-wikipedia",
+  "programmingLanguage": "Python (conda + Snakemake)",
+  "license": "https://spdx.org/licenses/MIT",
+  "version": "0.1.0",
+  "datePublished": "2026-10-09",
+  "keywords": ["ai-on-wikipedia", "Wikipedia", "artificial intelligence", "peer production", "pageviews"],
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Brian C.",
+      "familyName": "Keegan",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "CUPIDS Lab"
+      }
+    }
+  ],
+  "maintainer": {
+    "@type": "Person",
+    "givenName": "Brian C.",
+    "familyName": "Keegan",
+    "email": "accounts@brianckeegan.com"
+  }
+}
