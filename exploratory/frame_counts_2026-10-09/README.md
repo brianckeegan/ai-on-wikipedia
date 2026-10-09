@@ -1,5 +1,7 @@
 # Frame counts for the LOI (2026-10-09)
 
+**Status:** the broad category-union frame these scripts also measured was dropped on 2026-10-09 (`decision-log.md`). Only the WikiProject frame (`narrow_fix.py`) is used. The depth-1 crawl survives as the source of the scope-condition figure (17% of topics in other editions' AI categories have no English article).
+
 These scripts produced the frame sizes quoted in `docs/loi-draft.md` and `decision-log.md`. The sandbox's IP was rate-limited (HTTP 429) by the MediaWiki Action API, so they use services that query Wikipedia server-side: the Wikidata Query Service (title → item, item → sitelinks) and PetScan (category trees with Wikidata items). Run from the repo root with an output directory as the only argument, e.g. `python exploratory/frame_counts_2026-10-09/narrow_fix.py /tmp/out`.
 
 - `frame_counts.py` resolves the seed category's sitelinks (Q558331 links to all 20 editions), makes a first narrow mapping by article IRI (an undercount, superseded), and runs the depth-2 PetScan crawl.

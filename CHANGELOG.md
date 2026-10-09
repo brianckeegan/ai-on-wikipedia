@@ -6,11 +6,12 @@ All notable changes to AI on Wikipedia are recorded here. Format follows [Keep a
 
 ### Added
 - Initial project scaffold (level L2) via the CUPIDS Lab `data-project` skill.
-- Bracketed sampling-frame design (WikiProject AI narrow bound; multi-language category union broad bound) and the pinned WP1 snapshot `data/raw/wp1_artificial_intelligence_2026-10-09.tsv`.
+- Sampling frame built from the pinned WP1 snapshot `data/raw/wp1_artificial_intelligence_2026-10-09.tsv`.
 - Snakemake pipeline with working stages for language ranking, category crawl, frame construction, relevance-audit sampling, dump download, and pageviews; stubs for revisions, panel, and describe.
 - Research design memo, LOI draft, and the JQD:DM LaTeX manuscript template.
 
 ### Changed
+- Sampling frame narrowed to the English WikiProject Artificial Intelligence article set mapped across 20 editions (PI decision, 2026-10-09). The category-union frame, `categories.py`, and its pipeline rule are removed. The relevance audit is now a 200-item simple random sample, with a core-importance robustness subset. No non-AI baseline: the cross-edition comparison on a fixed topic set serves that role.
 
 ### Deprecated
 

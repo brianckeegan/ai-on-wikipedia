@@ -1,4 +1,4 @@
-"""Parse the WikiProject Artificial Intelligence (WP1) assessment snapshot: the narrow frame bound.
+"""Parse the WikiProject Artificial Intelligence (WP1) assessment snapshot: the sampling frame.
 
 Source: https://api.wp1.openzim.org/v1/projects/Artificial_Intelligence/articles?format=tsv
 """
@@ -31,8 +31,8 @@ def load_wp1(path: str) -> pd.DataFrame:
     return df
 
 
-def narrow_titles(df: pd.DataFrame) -> pd.DataFrame:
-    """Main-namespace rows: the narrow frame (redirects among NA-class rows resolve later)."""
+def frame_titles(df: pd.DataFrame) -> pd.DataFrame:
+    """Main-namespace rows: the frame (redirects among NA-class rows resolve later)."""
     return df.loc[df["is_article_ns"], ["article", "quality", "importance"]].rename(
         columns={"article": "title"}
     )

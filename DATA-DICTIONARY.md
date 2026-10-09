@@ -20,27 +20,12 @@ Documentation is half the work: a dataset without this file is a private spreads
 | `quality` | category | — | `GA`, `B`, `C`, `Start`, `Stub`, `List`, `NA`, `Unassessed` (each with `-Class` suffix) | WikiProject quality rating | `Unassessed-Class` = not rated; `NA-Class` main-namespace rows are mostly redirects |
 | `quality_updated` | datetime | ISO 8601 UTC | — | When the quality rating was last updated | — |
 
-## Dataset: `data/raw/categories/<wiki>.jsonl` (raw, bulk, git-ignored)
-
-- **Grain:** one row per article (namespace 0) reached from the wiki's local AI root category within `frame.category_depth` levels; first path found wins.
-- **Source / provenance:** MediaWiki Action API `list=categorymembers`, crawled by `src/ai_on_wikipedia/categories.py`; the local root category comes from the sitelinks of `frame.seed_category_qid` (or `frame.root_category_overrides`).
-- **Input license:** CC BY-SA 4.0. **Sensitivity:** public. **Update cadence:** re-crawled per run; category membership is the state at crawl time.
-- **Row count (as obtained):** at depth 1 on 2026-10-09 (PetScan), 14,617 rows in total: en 1,597 · es 1,455 · ar 1,340 · fa 1,317 · fr 1,231 · ko 1,070 · ja 894 · de 876 · it 698 · uk 588 · pt 578 · zh 524 · nl 367 · ru 346 · cs 341 · vi 341 · tr 298 · id 291 · pl 272 · sv 193.
-
-| Variable | Type | Units | Allowed values / range | Description | Missingness |
-| --- | --- | --- | --- | --- | --- |
-| `wiki` | string | — | language code in `languages.wikis` | Edition crawled | none |
-| `page_id` | int | — | > 0 | Local page ID | none |
-| `title` | string | — | — | Title at crawl time | none |
-| `depth` | int | levels | 0–`category_depth` | Category depth at which the article was first reached | none |
-| `via_category` | string | — | category title | Category the article was first reached through | none |
-
 ## Dataset: `data/processed/frame.parquet`
 
 - **Grain:** one row per (Wikidata item, analysis wiki) where the item has an article in that wiki.
-- **Source / provenance:** built by `src/ai_on_wikipedia/frame.py` from the WP1 snapshot, the category crawls, MediaWiki `pageprops` (title or page ID → QID), and Wikidata `wbgetentities` sitelinks.
+- **Source / provenance:** built by `src/ai_on_wikipedia/frame.py` from the WP1 snapshot, MediaWiki `pageprops` (English title → QID, following redirects), Wikidata `wbgetentities` sitelinks, and MediaWiki title → page ID lookups.
 - **Input license:** CC BY-SA 4.0 (Wikipedia) and CC0 (Wikidata). **Sensitivity:** public. **Update cadence:** per run.
-- **Row count (as obtained):** expected from the 2026-10-09 exploratory counts: narrow 1,212 items / 5,914 rows; broad (depth 1) 6,610 items / 42,961 rows; 709 items in both. Re-record from the pipeline's own output.
+- **Row count (as obtained):** expected from the 2026-10-09 exploratory counts: 1,212 items / 5,914 rows (en 1,209 · zh 370 · ko 365 · fr 357 · es 346 · fa 319 · ar 312 · ja 281 · ru 273 · pt 270 · uk 260 · de 259 · id 221 · it 182 · pl 178 · tr 168 · vi 149 · cs 141 · nl 139 · sv 115); 184 core-importance items / 2,142 rows. Re-record from the pipeline's own output.
 
 | Variable | Type | Units | Allowed values / range | Description | Missingness |
 | --- | --- | --- | --- | --- | --- |
@@ -48,12 +33,10 @@ Documentation is half the work: a dataset without this file is a private spreads
 | `wiki` | string | — | language code | Edition where the article exists | none |
 | `title` | string | — | — | Local title from the sitelink at build time | none |
 | `page_id` | Int64 | — | > 0 | Local page ID; joins to revisions | `<NA>` if the title did not resolve |
-| `in_narrow` | bool | — | — | Item is tagged by English WikiProject AI | none |
-| `in_broad` | bool | — | — | Item is in at least one wiki's AI category tree | none |
-| `broad_anchor_wikis` | string | — | comma-separated codes | Wikis whose category tree contains the item | null when `in_broad` is false |
-| `broad_min_depth` | float | levels | 0–`category_depth` | Shallowest depth at which the item was found | null when `in_broad` is false |
-| `wp1_quality` | category | — | as in the WP1 snapshot, without `-Class` | English WikiProject quality rating | null when `in_narrow` is false |
-| `wp1_importance` | category | — | as in the WP1 snapshot, without `-Class` | English WikiProject importance rating | null when `in_narrow` is false |
+| `wp1_title` | string | — | — | English title as listed in the WP1 snapshot (before redirect resolution) | none |
+| `wp1_quality` | category | — | as in the WP1 snapshot, without `-Class` | English WikiProject quality rating | none |
+| `wp1_importance` | category | — | as in the WP1 snapshot, without `-Class` | English WikiProject importance rating | none (`Unknown` = not rated) |
+| `core_importance` | bool | — | — | `wp1_importance` is in `frame.core_importance` (Top, High, Mid); the robustness subset | none |
 
 ## Dataset: `data/interim/revisions/<wiki>.parquet` *(planned)*
 
@@ -113,14 +96,14 @@ Documentation is half the work: a dataset without this file is a private spreads
 
 - `period` = `post` if `month` ≥ `window.boundary` else `pre`. See `settings.period`.
 - `cohort` = `entrant` if the article's first revision is on or after `window.boundary`.
-- `view_share` = article `views` / `__WIKI_TOTAL__` views for the same wiki and month. This normalizes for edition-wide traffic trends because there is no matched non-AI baseline (see `decision-log.md`).
+- `view_share` = article `views` / `__WIKI_TOTAL__` views for the same wiki and month. This reads each edition's AI attention against its own overall traffic; the cross-edition comparison on a fixed topic set stands in for a non-AI baseline (see `decision-log.md`).
 - `editor_key` = `HMAC-SHA256(EDITOR_ID_SALT, identifier)[:16]`.
 
 ### Known issues & caveats
 
 - **The frame is today's snapshot.** WikiProject tags and category membership are observed in 2026, not as they stood in 2020–2022. Articles deleted or merged before the snapshot are invisible (survivorship). Entrant articles exist only in the post-period by construction.
-- **WP1 is English-anchored.** Its cross-language coverage depends on Wikidata sitelinks, so AI articles that exist only in other languages appear only in the broad bound.
-- **Category trees drift.** Depth > 2 quickly reaches off-topic pages. Relevance is measured on a hand-coded audit sample, not assumed.
+- **The frame is English-defined.** Topics are those English WikiProject AI tags; cross-language coverage depends on Wikidata sitelinks. AI topics covered only in other editions are out of scope (an exploratory crawl found 17% of topics in other editions' AI categories, at depth 1, have no English article). 39% of frame items exist only in English.
+- **WikiProject tagging is noisy at the margins** (e.g. `Batik shirt` is tagged). Relevance is measured on a hand-coded random sample of 200 items, not assumed.
 - **Pageviews are by current title.** Views recorded under an earlier title (before a page move) are missed. Add redirect/move-log aggregation before trusting pre-period views for renamed pages.
 - **Automated-traffic classification changed** during the window. `agent=user` is the best available filter, not a clean measure of humans.
 - **Temporary accounts** replaced IP editing on many wikis in 2025. That breaks the `anon_edit_share` series. Report the rollout dates per wiki.
@@ -133,8 +116,8 @@ Documentation is half the work: a dataset without this file is a private spreads
 | QID | Wikidata item identifier; the language-independent unit that links the same topic across editions |
 | sitelink | The link from a Wikidata item to its article in a specific wiki |
 | WP1 | The Wikipedia 1.0 assessment tool that exports WikiProject quality and importance ratings |
-| narrow bound | Items tagged by English WikiProject Artificial Intelligence (editor-curated, English-anchored) |
-| broad bound | Items in any analysis wiki's local AI category tree to a fixed depth (multi-anchored, noisier) |
+| frame | The English WikiProject Artificial Intelligence article set, mapped through Wikidata to the 20 analysis editions |
+| core-importance subset | Frame items the WikiProject rates Top, High, or Mid importance; used as a robustness check |
 | incumbent / entrant | Article that existed before / was created on or after the period boundary |
 | identity revert | A revision whose content hash matches an earlier revision, restoring it exactly |
 | user agent (pageviews) | Wikimedia's classification of traffic not identified as spiders or automated |

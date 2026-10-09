@@ -40,20 +40,14 @@ languages:
                vi, ko, he, hi, fi, hu, th, el, ro, sr, bg, da, bn, ms, ca, no]
   wikis: [en, ja, es, ru, fr, de, it, zh, pt, ar, fa, pl, tr, nl, id, uk, sv, cs, vi, ko]
 
-# Sampling frame: a bracketed design.
-#   narrow = English WikiProject Artificial Intelligence assessed articles (editor-curated)
-#   broad  = union of each language's own AI category tree, mapped through Wikidata
+# Sampling frame: articles assessed by English WikiProject Artificial Intelligence, mapped
+# through Wikidata to their articles in every analysis wiki (decision-log.md, 2026-10-09).
 frame:
   wp1_snapshot: "data/raw/wp1_artificial_intelligence_2026-10-09.tsv"
   wp1_project: "Artificial_Intelligence"
-  # Wikidata item for the category "Category:Artificial intelligence" (enwiki pageprops,
-  # 2026-10-09); each wiki's local root category is resolved from this item's sitelinks.
-  seed_category_qid: "Q558331"
-  # Local root-category overrides, used when a wiki has no sitelink on the item above.
-  root_category_overrides: {}
-  # Depth 1 chosen 2026-10-09 after a depth sweep: depth 2 drifts off-topic (decision-log.md).
-  category_depth: 1
-  audit_sample_per_bound: 200
+  # WikiProject importance ratings that define the core-importance robustness subset.
+  core_importance: [Top, High, Mid]
+  audit_sample_size: 200
 
 # mediawiki_history dumps: https://dumps.wikimedia.org/other/mediawiki_history/
 mediawiki_history:

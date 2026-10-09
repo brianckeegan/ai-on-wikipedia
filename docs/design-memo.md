@@ -6,7 +6,7 @@ Working research design for the JQD:DM Special Workflow Issue. This is the brain
 
 The *Journal of Quantitative Description: Digital Media* publishes quantitative description and **no causal claims**. LOIs are judged by humans on four questions answered in order: the research question in one sentence, what is described, how the sample is constructed, and how it pertains to digital media. Reviewers "pay special attention to sampling and weighting." In the Special Workflow Issue, the full manuscript must pass an LLM check (via a skill file distributed on 2026-11-01). The check covers fit with the descriptive mandate (no causal claims slipped in), documentation of data, sampling, and measurement, appropriate statistics with reported uncertainty, internal consistency between text, tables, and figures, and self-contained presentation. Human reviewers then judge theoretical value, conceptual coherence, and contribution. Each author may appear on only one submission. Timeline: LOI 2026-10-25, manuscript 2027-01-15, reviews 2027-02-15, revisions 2027-03-08, publication 2027-03-15.
 
-Implications: November 2022 is a **period boundary, not a treatment**. Every number must trace to a pipeline output. Every comparison should carry an interval. The sampling frame needs to be defensible on its face, which is why it is bracketed.
+Implications: November 2022 is a **period boundary, not a treatment**. Every number must trace to a pipeline output. Every comparison should carry an interval. The sampling frame needs to be defensible on its face: one editor-curated topic set, measured identically in every edition, with its English-defined scope stated plainly.
 
 ## Research question (one sentence)
 
@@ -30,17 +30,19 @@ The unit is the **Wikidata item × language edition**, observed monthly from 202
 | Revision | edits/month; identity-revert share; bytes changed | `mediawiki_history` |
 | Coauthorship | distinct editors/month; new-editor share; Gini of edits across editors; anonymous/temporary/bot shares; cross-article and cross-wiki editor overlap (pseudonymized) | `mediawiki_history` |
 | Consumption | daily user pageviews → monthly; share of edition-wide user views | Wikimedia REST pageviews |
-| Frame metadata | WikiProject quality/importance; anchor wikis; category depth | WP1, category crawl |
+| Frame metadata | WikiProject quality/importance; core-importance flag | WP1 |
 
-## How the sample is constructed (bracketed frame)
+## How the sample is constructed
 
-The frame has two bounds. Every result is reported for both.
+The frame is a single, editor-curated topic set, measured identically in every edition (PI decision, 2026-10-09; see `decision-log.md`).
 
-- **Narrow bound: English WikiProject Artificial Intelligence.** The WP1 assessment export, frozen on 2026-10-09, has 1,882 tagged pages. 1,246 are in the main namespace (488 Start, 388 C, 112 B, 107 Stub, 29 List, 5 GA, 43 unassessed, and 74 NA-class rows that are mostly redirects). The rest are 463 drafts, 136 categories, 26 templates, and 11 files. Main-namespace titles are resolved through redirects to Wikidata items, then to their sitelinks in the 20 editions. This bound is editor-curated and high-precision, but English-anchored.
-- **Broad bound: multi-anchored category union.** Each edition's local root category for artificial intelligence (from the Wikidata item for Category:Artificial intelligence) is crawled to depth 1, meaning the category and its immediate subcategories (a depth sweep showed depth 2 drifting off-topic; see `decision-log.md`). Article members are mapped to Wikidata items and unioned across editions. The English root alone has 36 direct subcategories, several of which drift off-topic (people, fiction, robots, philosophy). The depth cap and a relevance audit keep that drift in check. This bound captures AI articles that exist only in non-English editions.
-- **Relevance audit.** A stratified random sample (narrow-only, broad-only, both; 200 items each, seed 42) is hand-coded for topical relevance. Precision per stratum, with 95% intervals, is reported in the paper.
+- **Frame: English WikiProject Artificial Intelligence, mapped across languages.** The WP1 assessment export, frozen on 2026-10-09, has 1,882 tagged pages. 1,246 are in the main namespace (488 Start, 388 C, 112 B, 107 Stub, 29 List, 5 GA, 43 unassessed, and 74 NA-class rows that are mostly redirects). The rest are 463 drafts, 136 categories, 26 templates, and 11 files. The main-namespace titles resolve (following redirects) to 1,212 Wikidata items, with 27 unmapped. Through sitelinks, those items have 5,914 articles across the 20 editions, from 1,209 in English to 115 in Swedish. 39% of items exist only in English, the median item appears in 2 editions, and 49 appear in all 20.
+- **Why one frame.** Holding the topic set fixed makes the editions comparable: differences between them cannot come from different definitions of "AI." The cross-edition comparison stands in for a non-AI baseline. Edition-wide totals (`view_share`, AI share of edition edits) give each edition its own denominator.
+- **Scope condition.** The topic set is defined by English Wikipedia. An exploratory crawl of each edition's own AI category and its immediate subcategories (`exploratory/frame_counts_2026-10-09/`) found that 17% of the topics filed there have no English article. These are out of scope and are stated as a limitation, not corrected for. The two-frame design using that crawl was considered and dropped.
+- **Relevance audit.** A simple random sample of 200 items (seed 42) is hand-coded for topical relevance, and the frame's precision is reported with a 95% interval. WikiProject tagging is noisy at the margins (for example, "Batik shirt" is tagged).
+- **Robustness subset.** Main results are re-run on the 184 items rated Top, High, or Mid importance (2,142 articles). 705 items have no importance rating, so the subset is small but cleanly on-topic.
 - **Languages.** The top 20 editions by user pageviews in 2022-10, the last full pre-period month: en, ja, es, ru, fr, de, it, zh, pt, ar, fa, pl, tr, nl, id, uk, sv, cs, vi, ko (ru verified at 945M, rank 4). Ranks 19–22 (vi, ko, he, hi) are within 12% of each other, so the 20th slot is fragile. Report this, and consider a robustness swap.
-- **Weighting.** The frame is a census of each bound, not a probability sample. Results are reported unweighted at the article level, plus attention-weighted (by pageviews) where the question is about what readers encounter. Edition-level summaries are not pooled across editions without stating the weights.
+- **Weighting.** The frame is a census of the WikiProject's topics, not a probability sample. Results are reported unweighted at the article level, plus attention-weighted (by pageviews) where the question is about what readers encounter. Edition-level summaries are not pooled across editions without stating the weights.
 - **Known frame limitations** (state them in the paper): the frame is observed in 2026, so pages deleted before then are missing (survivorship); entrants exist only post-boundary by construction; WikiProject tagging itself grew over the window; per-article pageviews are keyed to the current title.
 
 ## How it pertains to digital media
@@ -51,7 +53,7 @@ Wikipedia is a core piece of public information infrastructure. It is a top dest
 
 1. **Platform-wide trends.** Edition-wide pageviews and editing fell during the window, and Wikimedia reclassified automated traffic. Mitigation: edition-wide denominators (`view_share`, AI share of edition edits), and explicit notes on the classifier changes. A matched non-AI sample was considered and deferred (see `decision-log.md`).
 2. **Measurement breaks.** Temporary accounts replaced IP editing on many wikis in 2025. Report per-wiki rollout dates and avoid reading the anonymous-share series across them.
-3. **Frame dependence.** Handled by bracketing and the audit.
+3. **Frame dependence.** The frame is English-defined. This is handled by the stated scope condition, the relevance audit, and the core-importance robustness subset.
 4. **Multiple comparisons across 20 editions × many measures.** Lead with a small set of pre-specified headline measures. Present the rest as small multiples with intervals and no significance stars.
 
 ## Literature to position against (verify each before citing)
@@ -61,6 +63,4 @@ These are pointers from memory and must be checked before citing: Hecht & Gergle
 ## Open questions for the PI
 
 - Coauthors? Each author can appear on only one submission in this issue.
-- Should the paper lead with the narrow bound and treat the broad bound as robustness, or present them side by side?
 - Report Draft-namespace AI submissions (463 in WP1) as a side measure of production pressure?
-- Is depth 1 right for every edition? Category hierarchies vary in granularity, so a per-edition depth or a relevance-calibrated depth may be fairer.
