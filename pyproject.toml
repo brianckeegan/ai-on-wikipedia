@@ -1,0 +1,28 @@
+[project]
+name = "ai-on-wikipedia"
+version = "0.1.0"
+description = "Descriptive cross-language analysis of the production and consumption of AI-related Wikipedia articles before and after November 2022."
+authors = [{ name = "Brian C. Keegan", email = "accounts@brianckeegan.com" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pandas", "pyarrow", "pyyaml", "requests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_on_wikipedia"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# A sensible default set: pyflakes, pycodestyle, isort, bugbear, comprehensions.
+select = ["E", "F", "I", "B", "C4", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src"]

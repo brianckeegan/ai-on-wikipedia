@@ -1,0 +1,19 @@
+name: ai-on-wikipedia
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pandas
+  - pyarrow            # Parquet/Arrow I/O (open, columnar)
+  - pyyaml             # config.yaml
+  - requests           # Wikimedia APIs and dumps
+  - snakemake-minimal  # pipeline-as-code
+  - jupyterlab         # exploration only (notebooks live in exploratory/)
+  - matplotlib         # figures for the manuscript
+  - nbstripout         # strip notebook outputs (git filter + pre-commit) so they stay out of history
+  - pytest             # data/code validation
+  - pandera            # schema-as-contract validation
+  - ruff               # lint + format
+  - pre-commit         # local hooks
+  - python-dotenv      # load secrets (EDITOR_ID_SALT) from .env, never from code
+  - pip

@@ -1,0 +1,21 @@
+# LOI draft — JQD:DM Special Workflow Issue
+
+Due **2026-10-25** via the "Submit a Letter of Inquiry" link (journalqd.org/about/submissions). The LOI must answer the four questions **directly and in this order**. An abstract is not a substitute. Bracketed `[TBD: …]` items need numbers from the pipeline (see `ROADMAP.md`). This is a draft for the PI to rewrite in their own voice.
+
+**Working title:** Writing and reading about AI: production and consumption of AI-related Wikipedia articles across 20 language editions, 2020–2026
+
+## 1. What is your research question, in one sentence?
+
+How did the production (article creation, revision, and coauthorship) and consumption (pageviews) of AI-related Wikipedia articles change across the 20 most-read Wikipedia language editions after November 2022, relative to each edition's own pre-period trajectory and its edition-wide activity?
+
+## 2. What is being described?
+
+We describe monthly activity on AI-related Wikipedia articles from November 2020 through September 2026, split at November 2022 (the month ChatGPT was publicly released) into a 24-month pre-period and a 47-month post-period. We treat November 2022 as a descriptive period boundary, not an intervention. For each topic (a Wikidata item) in each language edition, we describe five things. *Coverage*: whether and when an article exists, separating articles that predate the boundary from those created after it. *Revision*: edits, bytes changed, and identity-revert rates. *Coauthorship*: distinct and new editors, the concentration of edits across editors, the shares of anonymous, temporary, and bot accounts, and editor overlap across articles and editions. *Attention*: user pageviews and the share of each edition's total traffic that AI articles receive. *Alignment*: whether growth in reading about AI in an edition matches growth in writing about it. All results are reported with intervals, per edition and pooled with stated weights.
+
+## 3. How is the sample constructed?
+
+The sample is a census of two nested frames, so that findings can be checked for sensitivity to frame choice. The **narrow frame** is the set of articles assessed by English Wikipedia's WikiProject Artificial Intelligence. A snapshot taken on 2026-10-09 contains 1,246 main-namespace pages. These are resolved to [TBD: N] Wikidata items and located through Wikidata sitelinks in all 20 editions ([TBD: N] item–edition articles). The **broad frame** unions each edition's own artificial intelligence category tree to depth 2, mapped to Wikidata. It yields [TBD: N] items, of which [TBD: %] have no English article, which captures AI coverage the English-anchored frame misses. A stratified random sample of 600 items (200 each from narrow-only, broad-only, and both) is hand-coded for topical relevance, and we report precision per stratum. The 20 editions are the most-read by user pageviews in October 2022 (en, ja, es, ru, fr, de, it, zh, pt, ar, fa, pl, tr, nl, id, uk, sv, cs, vi, ko), a choice that excludes bot-generated editions. Revision histories come from Wikimedia's public `mediawiki_history` dumps, and pageviews from the Wikimedia pageviews API (user agent only). We do not weight the census at the article level. Where a question concerns what readers encounter, we also report pageview-weighted estimates. Known limitations, which we will document, include survivorship (the frame is observed in 2026), page moves, Wikimedia's reclassification of automated traffic, and the 2025 replacement of IP editing by temporary accounts.
+
+## 4. How does it pertain to digital media?
+
+Wikipedia is a central piece of the digital information environment. It is a top search destination, and it is a primary training and grounding corpus for large language models. During the period studied, AI became both a topic Wikipedia's language communities had to document and a technology reshaping how readers reach Wikipedia. Describing which language publics produced and consumed reference knowledge about AI, and where reading outpaced writing, documents an uneven distribution of collaboratively produced information about a consequential technology across the world's largest online encyclopedia. The research questions concern how this digital medium's production and consumption changed, not only using Wikipedia as a data source.
