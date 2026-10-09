@@ -8,6 +8,10 @@ project: "ai-on-wikipedia"
 # way to contact you: replace with your own project URL and/or email.
 user_agent: "ai-on-wikipedia/0.1 (https://github.com/brianckeegan/ai-on-wikipedia)"
 
+# Minimum seconds between API requests (all endpoints). Raise it if you see throttling.
+http:
+  min_interval_seconds: 1.0
+
 paths:
   raw: "data/raw"
   interim: "data/interim"
@@ -42,9 +46,9 @@ languages:
 frame:
   wp1_snapshot: "data/raw/wp1_artificial_intelligence_2026-10-09.tsv"
   wp1_project: "Artificial_Intelligence"
-  # Wikidata item for the category "Category:Artificial intelligence"; each wiki's
-  # local root category is resolved from this item's sitelinks. VERIFY before running.
-  seed_category_qid: null
+  # Wikidata item for the category "Category:Artificial intelligence" (enwiki pageprops,
+  # 2026-10-09); each wiki's local root category is resolved from this item's sitelinks.
+  seed_category_qid: "Q558331"
   # Local root-category overrides, used when a wiki has no sitelink on the item above.
   root_category_overrides: {}
   category_depth: 2

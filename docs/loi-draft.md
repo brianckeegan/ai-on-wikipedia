@@ -1,21 +1,47 @@
-# LOI draft — JQD:DM Special Workflow Issue
+# LOI — JQD:DM Special Workflow Issue
 
-Due **2026-10-25** via the "Submit a Letter of Inquiry" link (journalqd.org/about/submissions). The LOI must answer the four questions **directly and in this order**. An abstract is not a substitute. Bracketed `[TBD: …]` items need numbers from the pipeline (see `ROADMAP.md`). This is a draft for the PI to rewrite in their own voice.
+Due **2026-10-25** through "Submit a Letter of Inquiry" (journalqd.org/about/submissions; log in or register first). The journal sets no length or file format, so this version aims for roughly 900 words of plain text that can be pasted into the form. It answers the four required questions directly and in order. Numbers marked `[TBD]` come from the pipeline (`ROADMAP.md`). Status: **v1 draft for the PI to edit.**
 
-**Working title:** Writing and reading about AI: production and consumption of AI-related Wikipedia articles across 20 language editions, 2020–2026
+**Working title:** Writing and Reading About AI: Production and Consumption of AI-Related Wikipedia Articles Across 20 Language Editions, 2020–2026
 
-## 1. What is your research question, in one sentence?
+---
 
-How did the production (article creation, revision, and coauthorship) and consumption (pageviews) of AI-related Wikipedia articles change across the 20 most-read Wikipedia language editions after November 2022, relative to each edition's own pre-period trajectory and its edition-wide activity?
+**1. What is your research question, in one sentence?**
 
-## 2. What is being described?
+How did the production (article creation, revision, and coauthorship) and consumption (pageviews) of Wikipedia articles about artificial intelligence change across the 20 most-read Wikipedia language editions after November 2022, relative to each edition's own prior trajectory and its edition-wide activity?
 
-We describe monthly activity on AI-related Wikipedia articles from November 2020 through September 2026, split at November 2022 (the month ChatGPT was publicly released) into a 24-month pre-period and a 47-month post-period. We treat November 2022 as a descriptive period boundary, not an intervention. For each topic (a Wikidata item) in each language edition, we describe five things. *Coverage*: whether and when an article exists, separating articles that predate the boundary from those created after it. *Revision*: edits, bytes changed, and identity-revert rates. *Coauthorship*: distinct and new editors, the concentration of edits across editors, the shares of anonymous, temporary, and bot accounts, and editor overlap across articles and editions. *Attention*: user pageviews and the share of each edition's total traffic that AI articles receive. *Alignment*: whether growth in reading about AI in an edition matches growth in writing about it. All results are reported with intervals, per edition and pooled with stated weights.
+**2. What is being described?**
 
-## 3. How is the sample constructed?
+We describe monthly activity on AI-related Wikipedia articles from November 2020 through September 2026 in 20 language editions. We split this window at November 2022, the month ChatGPT was released to the public, into a 24-month earlier period and a 47-month later period. The split is a descriptive marker: we make no claim that the release, or any other event, caused the differences we report.
 
-The sample is a census of two nested frames, so that findings can be checked for sensitivity to frame choice. The **narrow frame** is the set of articles assessed by English Wikipedia's WikiProject Artificial Intelligence. A snapshot taken on 2026-10-09 contains 1,246 main-namespace pages. These are resolved to [TBD: N] Wikidata items and located through Wikidata sitelinks in all 20 editions ([TBD: N] item–edition articles). The **broad frame** unions each edition's own artificial intelligence category tree to depth 2, mapped to Wikidata. It yields [TBD: N] items, of which [TBD: %] have no English article, which captures AI coverage the English-anchored frame misses. A stratified random sample of 600 items (200 each from narrow-only, broad-only, and both) is hand-coded for topical relevance, and we report precision per stratum. The 20 editions are the most-read by user pageviews in October 2022 (en, ja, es, ru, fr, de, it, zh, pt, ar, fa, pl, tr, nl, id, uk, sv, cs, vi, ko), a choice that excludes bot-generated editions. Revision histories come from Wikimedia's public `mediawiki_history` dumps, and pageviews from the Wikimedia pageviews API (user agent only). We do not weight the census at the article level. Where a question concerns what readers encounter, we also report pageview-weighted estimates. Known limitations, which we will document, include survivorship (the frame is observed in 2026), page moves, Wikimedia's reclassification of automated traffic, and the 2025 replacement of IP editing by temporary accounts.
+The unit of observation is a topic (a Wikidata item) in a language edition in a month. For each unit we describe five things:
 
-## 4. How does it pertain to digital media?
+- **Coverage.** Whether an article on the topic exists in the edition, when it was created, and whether it predates or postdates November 2022.
+- **Revision.** The volume of edits, the bytes added and removed, and the share of edits that are later reverted.
+- **Coauthorship.** How many distinct editors contribute, how many are new to the article, how concentrated the work is among them, and what share comes from unregistered, temporary, and automated accounts.
+- **Consumption.** Pageviews from human readers, and the share of each edition's total traffic that AI articles receive.
+- **Alignment of production and consumption.** For each edition, whether growth in reading about AI kept pace with growth in writing about it.
 
-Wikipedia is a central piece of the digital information environment. It is a top search destination, and it is a primary training and grounding corpus for large language models. During the period studied, AI became both a topic Wikipedia's language communities had to document and a technology reshaping how readers reach Wikipedia. Describing which language publics produced and consumed reference knowledge about AI, and where reading outpaced writing, documents an uneven distribution of collaboratively produced information about a consequential technology across the world's largest online encyclopedia. The research questions concern how this digital medium's production and consumption changed, not only using Wikipedia as a data source.
+We report each measure by edition and by period, with bootstrap confidence intervals over articles. We also report the differences between editions, which we expect to be at least as informative as the differences between periods.
+
+**3. How is the sample constructed?**
+
+There is no authoritative list of "AI articles," so we construct two frames that bracket the population and report every result for both.
+
+*Narrow frame.* English Wikipedia's WikiProject Artificial Intelligence tags articles its participants judge to be within scope. A snapshot of its assessment list, taken 9 October 2026, contains 1,246 main-namespace pages, which resolve to [TBD] distinct Wikidata items. Through Wikidata's cross-language links, these items have [TBD] articles across the 20 editions, ranging from [TBD] in English to [TBD] in [TBD]. This frame is curated and precise, but it is anchored in English: it can only find topics that English Wikipedia covers.
+
+*Broad frame.* Each edition maintains its own category for artificial intelligence (all linked to one Wikidata item). We collect every article within two levels of each edition's category and take the union across editions. This yields [TBD] distinct items, [TBD]% of which have no English article. This frame captures coverage that originates outside English but includes more off-topic pages, because category hierarchies drift.
+
+*Relevance audit.* We draw a stratified random sample of 600 items (200 found only in the narrow frame, 200 only in the broad frame, and 200 in both) and hand-code each for whether it is substantively about AI. We report the precision of each stratum with its uncertainty. Findings that hold in both frames are robust to how "AI-related" is defined. Where the frames diverge, the divergence is itself a description of how language communities organize knowledge about AI.
+
+*Editions.* We include the 20 editions with the most human pageviews in October 2022, the last month before the split: English, Japanese, Spanish, Russian, French, German, Italian, Chinese, Portuguese, Arabic, Persian, Polish, Turkish, Dutch, Indonesian, Ukrainian, Swedish, Czech, Vietnamese, and Korean. Ranking by readership rather than article count excludes editions whose size comes mostly from automatically generated articles. Readership drops off steeply: the 19th through 22nd editions are within 12% of one another, so we will show that results do not hinge on the last slot.
+
+*Data.* Revision histories come from Wikimedia's public `mediawiki_history` dumps (snapshot 2026-09). Pageviews come from the Wikimedia pageviews API, restricted to traffic classified as human. Editor identifiers are pseudonymized with a keyed hash before analysis, and only aggregates will be released.
+
+*Weighting.* Each frame is a census, not a probability sample, so we do not apply sampling weights within it. Two weighting choices remain, and we state both. Article-level summaries weight every article equally. Summaries of what readers encounter weight articles by pageviews. Pooled cross-edition figures are reported twice: weighting editions equally (each language community as one unit) and weighting by readership. We expect the two to differ sharply, because English accounts for most AI pageviews.
+
+*Known limitations.* Both frames are observed in 2026, so articles deleted before then are absent, and articles created after November 2022 exist only in the later period by construction. We therefore report incumbent and newly created articles separately. Pageviews are recorded under an article's current title, so we add views logged under earlier titles. Two measurement changes fall inside the window, and we flag them where they affect the series: Wikimedia's reclassification of automated traffic, and the replacement of IP editing by temporary accounts in 2025.
+
+**4. How does it pertain to digital media?**
+
+Wikipedia is one of the most heavily used reference sources on the web. It is a frequent destination from search engines, and it is a primary source of training and grounding data for large language models. In the period we study, artificial intelligence became both a subject that Wikipedia's language communities had to document and a technology that changes how readers reach Wikipedia. Our questions concern this platform directly: who writes about AI on it, in which languages, how that work is organized, and how much readers in each language community consult it. The answers describe how unevenly collaboratively produced reference knowledge about a consequential technology was distributed across the world's largest online encyclopedia, and where public attention outpaced the volunteer labor that maintains it.

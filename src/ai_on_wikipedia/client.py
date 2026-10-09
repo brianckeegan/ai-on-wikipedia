@@ -22,10 +22,12 @@ def session() -> requests.Session:
 
 
 def get_json(
-    url: str, params: dict | None = None, *, max_tries: int = 6, min_interval: float = 0.1
+    url: str, params: dict | None = None, *, max_tries: int = 8, min_interval: float | None = None
 ) -> dict:
     """GET a JSON document, sleeping between calls and backing off on throttling."""
     global _last_request
+    if min_interval is None:
+        min_interval = load_config().get("http", {}).get("min_interval_seconds", 1.0)
     for attempt in range(max_tries):
         wait = min_interval - (time.monotonic() - _last_request)
         if wait > 0:
@@ -34,7 +36,8 @@ def get_json(
         resp = session().get(url, params=params, timeout=60)
         if resp.status_code == 404:
             return {}
-        if resp.status_code == 429 or resp.status_code >= 500:
+        throttled = "too many requests" in resp.text[:300].lower()
+        if resp.status_code == 429 or resp.status_code >= 500 or throttled:
             retry_after = resp.headers.get("Retry-After")
             time.sleep(float(retry_after) if retry_after else 2**attempt)
             continue
