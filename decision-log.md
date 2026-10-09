@@ -2,6 +2,17 @@
 
 A running, dated record of design and data decisions and *why* they were made — the provenance of the project's choices, legible to people who join later. Add an entry whenever you make a non-obvious choice (a filtering rule, a definition, a tool, a tradeoff). Newest first.
 
+## 2026-10-09 — Frame mapping ported to WDQS; corrected frame counts
+
+- **Context:** The MediaWiki Action API rate-limits shared IPs (HTTP 429), so the pipeline's frame stage could not reproduce the exploratory counts in the LOI.
+- **Decision:** `frame.py` now matches WP1 titles to Wikidata items by exact English sitelink name through the Wikidata Query Service, and fetches all sitelinks from WDQS. The Action API is used only for the 46 titles WDQS cannot match exactly (redirects and normalization), for items whose sitelinks WDQS does not return, and for page IDs (skippable with `--skip-page-ids`).
+- **Why:** Bulk WDQS queries replace about 100 throttled Action API calls with about 10 queries. Building the queries with `string.Template` keeps literal SPARQL braces out of f-strings, which would otherwise trip the CI token guard.
+- **Consequences:** Two discrepancies with the exploratory counts were found and resolved.
+  1. *Scholarly-work items:* "Attention Is All You Need" (Q30249683), "A Logical Calculus of the Ideas Immanent in Nervous Activity" (Q22337370) and the Lighthill report (Q4340232) resolve to items that the main WDQS endpoint no longer holds, consistent with Wikidata's 2025 split of scholarly works into a separate graph. The exploratory scripts therefore counted them as items with zero articles ("1,212 items / 5,914 articles" was internally inconsistent). The pipeline fetches their sitelinks through `wbgetentities`.
+  2. *Live drift:* the WP1 title "OpenAI–HuggingFace incident" (Q140677657) was renamed on English Wikipedia to "2026 cyberattacks by rogue OpenAI agents" after the snapshot, without a resolvable redirect, so it now counts as unmapped.
+
+  Corrected frame (pipeline run, 2026-10-09): 1,200 exact matches + 18 via redirects; 28 unmapped; **1,211 items, 5,928 articles** (en 1,211 … sv 115); core-importance subset **183 items, 2,154 articles**. Coverage statistics are unchanged at the reported precision: 39% English-only, median 2 editions, 49 in all 20. The LOI and design memo now cite these numbers. Because the frame depends on live Wikipedia and Wikidata, freeze `data/processed/frame.parquet` from one dated run for the manuscript.
+
 ## 2026-10-09 — Single frame: WikiProject AI articles mapped across languages; no non-AI baseline
 
 - **Context:** After seeing the frame counts, the PI chose to drop the two-frame (bracketed) design.

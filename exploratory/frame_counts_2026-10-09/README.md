@@ -10,4 +10,4 @@ These scripts produced the frame sizes quoted in `docs/loi-draft.md` and `decisi
 
 Results (2026-10-09): narrow 1,246 pages → 1,219 mapped (27 without a Wikidata item) → 1,212 distinct items → 5,914 articles across the 20 editions. Broad at depth 0 / 1 / 2: 1,922 / 6,610 / 16,859 distinct items, containing 31.8% / 58.5% / 73.7% of the narrow items. At depth 1 there are 42,961 articles; 17.4% of items have no English article, and 65.0% appear in only one edition's tree.
 
-These are exploratory. Fold the WDQS and PetScan backends into `src/ai_on_wikipedia/` (see `ROADMAP.md`) so that the pipeline itself reproduces these numbers.
+These are exploratory and **superseded** by the pipeline's frame stage (`src/ai_on_wikipedia/frame.py`, WDQS-backed). Its output of 2026-10-09 is 1,211 items and 5,928 articles. The difference comes from two things. These scripts dropped three scholarly-work items that the main WDQS graph no longer holds, so 1,212 items had only 5,914 articles between them. And one WP1 title was renamed on Wikipedia after the snapshot (see `decision-log.md`).
