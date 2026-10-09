@@ -3,7 +3,7 @@
 # re-released (new dump snapshot, new WP1 snapshot), re-running this re-applies every
 # transformation. Preview with `snakemake -n`.
 #
-# Stages: rank_languages -> category_tree (per wiki) -> frame -> audit_sample
+# Stages: rank_languages -> frame -> audit_sample
 #         -> mediawiki_history -> revisions (per wiki) -> pageviews (per wiki)
 #         -> panel -> describe
 
@@ -30,27 +30,18 @@ rule rank_languages:
         "python -m {PKG}.languages {output}"
 
 
-# Crawl each wiki's local AI category tree to the configured depth (broad bound).
-rule category_tree:
-    output:
-        "data/raw/categories/{wiki}.jsonl",
-    shell:
-        "python -m {PKG}.categories {wildcards.wiki} {output}"
-
-
-# Build the bracketed frame: WP1 (narrow) + category union (broad), mapped to
-# Wikidata items and their sitelinks in every analysis wiki.
+# Build the frame: WikiProject AI articles (WP1 snapshot) mapped to Wikidata items and
+# their sitelinks in every analysis wiki.
 rule frame:
     input:
-        wp1=config["frame"]["wp1_snapshot"],
-        categories=expand("data/raw/categories/{wiki}.jsonl", wiki=WIKIS),
+        config["frame"]["wp1_snapshot"],
     output:
         "data/processed/frame.parquet",
     shell:
-        "python -m {PKG}.frame {input.wp1} {output} {input.categories}"
+        "python -m {PKG}.frame {input} {output}"
 
 
-# Stratified random sample for hand-coding topical relevance of each bound.
+# Random sample of frame items for hand-coding topical relevance.
 rule audit_sample:
     input:
         "data/processed/frame.parquet",

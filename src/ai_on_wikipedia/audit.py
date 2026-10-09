@@ -1,7 +1,7 @@
-"""Draw a stratified random sample of frame items for hand-coding topical relevance.
+"""Draw a simple random sample of frame items for hand-coding topical relevance.
 
-Strata: narrow-only, broad-only, both. Coders fill `relevant` (1/0) and `notes`; the coded
-file is saved as a new file (never overwrite the sample) and reported as precision per bound.
+Coders fill `relevant` (1/0) and `notes`; the coded file is saved as a new file (never
+overwrite the sample) and reported as the frame's precision with a 95% interval.
 
 Usage: python -m ai_on_wikipedia.audit <frame.parquet> <relevance_audit_sample.csv>
 """
@@ -15,28 +15,14 @@ import pandas as pd
 from .settings import load_config
 
 
-def stratum(row: pd.Series) -> str:
-    if row["in_narrow"] and row["in_broad"]:
-        return "both"
-    return "narrow_only" if row["in_narrow"] else "broad_only"
-
-
 def main(frame_path: str, out: str) -> None:
     cfg = load_config()
-    n = cfg["frame"]["audit_sample_per_bound"]
     frame = pd.read_parquet(frame_path)
-    # One row per item; prefer the English title for coding, else any available title.
-    items = (
-        frame.assign(_en=frame["wiki"].eq("en"))
-        .sort_values(["qid", "_en"], ascending=[True, False])
-        .drop_duplicates("qid")
-        .drop(columns="_en")
-    )
-    items["stratum"] = items.apply(stratum, axis=1)
-    sample = pd.concat(
-        g.sample(min(n, len(g)), random_state=cfg["seed"]) for _, g in items.groupby("stratum")
-    )
-    sample = sample[["stratum", "qid", "wiki", "title", "wp1_quality", "broad_anchor_wikis"]]
+    items = frame.drop_duplicates("qid")[
+        ["qid", "wp1_title", "wp1_quality", "wp1_importance", "core_importance"]
+    ]
+    n = min(cfg["frame"]["audit_sample_size"], len(items))
+    sample = items.sample(n, random_state=cfg["seed"]).sort_values("qid")
     sample["relevant"] = ""
     sample["notes"] = ""
     sample.to_csv(out, index=False)

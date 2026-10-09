@@ -5,7 +5,7 @@ import pytest
 
 from ai_on_wikipedia.privacy import editor_key
 from ai_on_wikipedia.settings import period
-from ai_on_wikipedia.wp1 import load_wp1, narrow_titles
+from ai_on_wikipedia.wp1 import frame_titles, load_wp1
 
 SNAPSHOT = Path("data/raw/wp1_artificial_intelligence_2026-10-09.tsv")
 
@@ -30,9 +30,9 @@ def test_editor_key_requires_salt(monkeypatch):
 
 def test_wp1_snapshot_namespaces():
     df = load_wp1(SNAPSHOT)
-    narrow = narrow_titles(df)
+    titles = frame_titles(df)
     # Reconciles with the counts recorded in DATA-DICTIONARY.md for this snapshot.
     assert len(df) == 1882
-    assert len(narrow) == 1246
-    assert not narrow["title"].str.startswith(("Draft:", "Category:", "Template:")).any()
-    assert "-Class" not in "".join(narrow["quality"])
+    assert len(titles) == 1246
+    assert not titles["title"].str.startswith(("Draft:", "Category:", "Template:")).any()
+    assert "-Class" not in "".join(titles["quality"])

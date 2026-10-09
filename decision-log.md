@@ -2,14 +2,21 @@
 
 A running, dated record of design and data decisions and *why* they were made — the provenance of the project's choices, legible to people who join later. Add an entry whenever you make a non-obvious choice (a filtering rule, a definition, a tool, a tradeoff). Newest first.
 
-## 2026-10-09 — Broad frame limited to category depth 1; frame sizes for the LOI
+## 2026-10-09 — Single frame: WikiProject AI articles mapped across languages; no non-AI baseline
+
+- **Context:** After seeing the frame counts, the PI chose to drop the two-frame (bracketed) design.
+- **Decision:** The frame is the English WikiProject Artificial Intelligence article set (WP1 snapshot 2026-10-09), mapped through Wikidata to the corresponding articles in the 20 analysis editions: 1,212 items, 5,914 articles. The broad category-union frame is dropped, and `categories.py` and its pipeline rule are removed. No matched non-AI baseline will be built.
+- **Why:** A fixed topic set measured identically in every edition makes the multilingual comparison the comparative device. Differences between editions cannot be artifacts of different topic definitions, and the editions serve as comparison cases for one another in place of a non-AI baseline. Edition-wide denominators still separate AI activity from each edition's overall trend.
+- **Consequences:** English-defined scope is stated as a limitation: an exploratory crawl found 17% of topics in other editions' AI categories (depth 1) have no English article. The relevance audit becomes a simple random sample of 200 items. A core-importance robustness subset (Top/High/Mid: 184 items, 2,142 articles) replaces the bracket as the frame-sensitivity check. The entries below on the bracketed frame and category depth are superseded and kept for provenance.
+
+## 2026-10-09 — (Superseded) Broad frame limited to category depth 1; frame sizes for the LOI
 
 - **Context:** A depth sweep of each edition's AI category tree (PetScan, all 20 roots resolved from Q558331) gave 1,922 / 6,610 / 16,859 distinct Wikidata items at depth 0 / 1 / 2, containing 31.8% / 58.5% / 73.7% of the narrow frame's items. Random draws at depth 2 were visibly off-topic (Sieve of Eratosthenes and a low-pass filter in ar, a video-game character in ko, a video-game series in en). At depth 1, most draws were on-topic, with some noise (Tower of Hanoi, Chinese Library Classification, focus group).
 - **Decision:** Set `frame.category_depth` to 1. Keep depth 2 only as an outer sensitivity bound if reviewers ask.
 - **Why:** Depth 2 nearly triples the frame and mostly adds drift. Depth 1 still adds coverage the narrow frame lacks (17.4% of its items have no English article).
 - **Consequences:** LOI frame sizes. Narrow: 1,246 pages → 1,212 distinct items (27 pages unmapped) → 5,914 articles across 20 editions, from en 1,209 down to sv 115. Broad at depth 1: 6,610 items → 42,961 articles; 65.0% of items are anchored by one edition only. The relevance audit must still quantify the precision of depth 1. These numbers came from exploratory WDQS/PetScan scripts (`exploratory/frame_counts_2026-10-09/`) because the Action API rate-limited the sandbox, so the pipeline must be ported to those backends to reproduce them.
 
-## 2026-10-09 — Bracketed sampling frame: WikiProject AI (narrow) and multi-language category union (broad)
+## 2026-10-09 — (Superseded) Bracketed sampling frame: WikiProject AI (narrow) and multi-language category union (broad)
 
 - **Context:** JQD:DM reviewers "pay special attention to sampling." A single English category tree is both noisy (it drifts off-topic with depth) and English-anchored (it misses AI articles that exist only in other languages).
 - **Decision:** Report every measure for two bounds. **Narrow:** the main-namespace articles in the WikiProject Artificial Intelligence WP1 snapshot (1,246 main-namespace rows of 1,882 total on 2026-10-09), mapped to Wikidata and their sitelinks. **Broad:** the union of each analysis wiki's local AI category tree (root from the Wikidata item for Category:Artificial intelligence, Q558331, which links to all 20 editions; depth 1 — see the depth entry above), mapped to Wikidata. Record which wikis anchor each item, and hand-code a stratified relevance sample (narrow-only, broad-only, both).
@@ -28,7 +35,7 @@ A running, dated record of design and data decisions and *why* they were made �
 - **Context:** Wikipedia-wide pageviews and editing are declining, and traffic classification changed during the window, so raw AI-article trends mix topic-specific change with platform-wide change.
 - **Decision:** No matched non-AI article sample (PI decision; cost and time before the 2027-01-15 manuscript deadline). Instead, normalize attention by wiki-wide user pageviews (`view_share`) and compare AI-article editing to edition-level totals from the same dumps.
 - **Why:** A wiki-wide denominator costs one extra API call per wiki and separates the AI share from platform trends at the edition level.
-- **Consequences:** Article-level comparisons to "similar" non-AI articles cannot be made. If reviewers press on this, the matched baseline is listed in `ROADMAP.md`.
+- **Consequences:** Article-level comparisons to "similar" non-AI articles cannot be made. The PI confirmed on 2026-10-09 that the multilingual comparison serves this role (see the single-frame entry above), so the baseline is not planned.
 
 ## 2026-10-09 — Observation window and period boundary
 
