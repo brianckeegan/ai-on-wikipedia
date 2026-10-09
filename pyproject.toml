@@ -17,6 +17,8 @@ packages = ["src/ai_on_wikipedia"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+# Exploratory scripts and notebooks are not held to package lint rules.
+extend-exclude = ["exploratory"]
 
 [tool.ruff.lint]
 # A sensible default set: pyflakes, pycodestyle, isort, bugbear, comprehensions.

@@ -51,7 +51,8 @@ frame:
   seed_category_qid: "Q558331"
   # Local root-category overrides, used when a wiki has no sitelink on the item above.
   root_category_overrides: {}
-  category_depth: 2
+  # Depth 1 chosen 2026-10-09 after a depth sweep: depth 2 drifts off-topic (decision-log.md).
+  category_depth: 1
   audit_sample_per_bound: 200
 
 # mediawiki_history dumps: https://dumps.wikimedia.org/other/mediawiki_history/

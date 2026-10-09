@@ -25,7 +25,7 @@ Documentation is half the work: a dataset without this file is a private spreads
 - **Grain:** one row per article (namespace 0) reached from the wiki's local AI root category within `frame.category_depth` levels; first path found wins.
 - **Source / provenance:** MediaWiki Action API `list=categorymembers`, crawled by `src/ai_on_wikipedia/categories.py`; the local root category comes from the sitelinks of `frame.seed_category_qid` (or `frame.root_category_overrides`).
 - **Input license:** CC BY-SA 4.0. **Sensitivity:** public. **Update cadence:** re-crawled per run; category membership is the state at crawl time.
-- **Row count (as obtained):** `<N per wiki — record after first crawl>`.
+- **Row count (as obtained):** at depth 1 on 2026-10-09 (PetScan), 14,617 rows in total: en 1,597 · es 1,455 · ar 1,340 · fa 1,317 · fr 1,231 · ko 1,070 · ja 894 · de 876 · it 698 · uk 588 · pt 578 · zh 524 · nl 367 · ru 346 · cs 341 · vi 341 · tr 298 · id 291 · pl 272 · sv 193.
 
 | Variable | Type | Units | Allowed values / range | Description | Missingness |
 | --- | --- | --- | --- | --- | --- |
@@ -40,7 +40,7 @@ Documentation is half the work: a dataset without this file is a private spreads
 - **Grain:** one row per (Wikidata item, analysis wiki) where the item has an article in that wiki.
 - **Source / provenance:** built by `src/ai_on_wikipedia/frame.py` from the WP1 snapshot, the category crawls, MediaWiki `pageprops` (title or page ID → QID), and Wikidata `wbgetentities` sitelinks.
 - **Input license:** CC BY-SA 4.0 (Wikipedia) and CC0 (Wikidata). **Sensitivity:** public. **Update cadence:** per run.
-- **Row count (as obtained):** `<N rows; N distinct QIDs; N narrow; N broad; N both — record after first run>`.
+- **Row count (as obtained):** expected from the 2026-10-09 exploratory counts: narrow 1,212 items / 5,914 rows; broad (depth 1) 6,610 items / 42,961 rows; 709 items in both. Re-record from the pipeline's own output.
 
 | Variable | Type | Units | Allowed values / range | Description | Missingness |
 | --- | --- | --- | --- | --- | --- |
