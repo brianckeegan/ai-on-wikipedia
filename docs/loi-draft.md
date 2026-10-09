@@ -1,10 +1,14 @@
 # LOI — JQD:DM Special Workflow Issue
 
-Due **2026-10-25** through "Submit a Letter of Inquiry" (journalqd.org/about/submissions; log in or register first). The journal sets no length or file format, so this version aims for roughly 900 words of plain text that can be pasted into the form. It answers the four required questions directly and in order. Frame sizes come from the pipeline's frame stage, run on 2026-10-09 (`snakemake data/processed/frame.parquet`). Status: **v1 draft with numbers, for the PI to edit.**
+Due **2026-10-25** through "Submit a Letter of Inquiry" (journalqd.org/about/submissions; log in or register first). The journal sets no length or file format; this version is plain text that can be pasted into the form. A 150-word abstract comes first, followed by direct answers to the four required questions, in order. The journal says an abstract is not a substitute for those answers, so the abstract supplements them and does not replace them. Frame sizes come from the pipeline's frame stage, run on 2026-10-09 (`snakemake data/processed/frame.parquet`). Status: **v1 draft with numbers, for the PI to edit.**
 
 **Working title:** Writing and Reading About AI: Production and Consumption of AI-Related Wikipedia Articles Across 20 Language Editions, 2020–2026
 
 ---
+
+**Abstract**
+
+Generative AI became a mass-audience topic after November 2022, and Wikipedia is a main place where the public documents and reads about it. We describe how Wikipedia's coverage of artificial intelligence changed across the 20 most-read language editions from November 2020 to September 2026. Our frame is the articles English Wikipedia's WikiProject Artificial Intelligence considers in scope: 1,211 topics with 5,928 articles across the 20 editions. Because every edition is measured on the same topics, the editions serve as comparisons for one another. Using public revision histories and pageview data, we describe coverage, revision activity, coauthorship, and readership before and after November 2022, and whether reading about AI kept pace with writing about it in each language. We treat November 2022 as a period boundary, not a cause, and report estimates with uncertainty. The result documents how unevenly reference knowledge about a consequential technology is produced and consumed across languages.
 
 **1. What is your research question, in one sentence?**
 
