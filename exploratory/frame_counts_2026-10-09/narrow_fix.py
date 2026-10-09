@@ -26,7 +26,7 @@ titles = narrow["title"].tolist()
 q = {}
 for i in range(0, len(titles), 200):
     vals = " ".join(lit(t) for t in titles[i:i+200])
-    for r in sparql(f"SELECT ?name ?item WHERE {{ VALUES ?name {{ {vals} }} ?a schema:name ?name; schema:isPartOf <https://en.wikipedia.org/>; schema:about ?item }}"):
+    for r in sparql("SELECT ?name ?item WHERE { VALUES ?name { %s } ?a schema:name ?name; schema:isPartOf <https://en.wikipedia.org/>; schema:about ?item }" % vals):
         q[r["name"]] = r["item"].rsplit("/", 1)[1]
     time.sleep(2)
 narrow["qid"] = narrow["title"].map(q)
@@ -57,9 +57,9 @@ qids = sorted(narrow.qid.dropna().unique())
 out = []
 for i in range(0, len(qids), 400):
     vals = " ".join(f"wd:{x}" for x in qids[i:i+400])
-    out += sparql(f"""SELECT ?item ?site ?title WHERE {{ VALUES ?item {{ {vals} }}
+    out += sparql("""SELECT ?item ?site ?title WHERE { VALUES ?item { %s }
       ?a schema:about ?item; schema:isPartOf ?site; schema:name ?title.
-      FILTER(?site IN ({", ".join(f"<https://{w}.wikipedia.org/>" for w in WIKIS)})) }}""")
+      FILTER(?site IN (%s)) }""" % (vals, ", ".join("<https://%s.wikipedia.org/>" % w for w in WIKIS)))
     time.sleep(2)
 sl = pd.DataFrame(out)
 sl["qid"] = sl["item"].str.rsplit("/", n=1).str[1]
