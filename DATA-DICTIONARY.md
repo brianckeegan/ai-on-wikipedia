@@ -23,16 +23,16 @@ Documentation is half the work: a dataset without this file is a private spreads
 ## Dataset: `data/processed/frame.parquet`
 
 - **Grain:** one row per (Wikidata item, analysis wiki) where the item has an article in that wiki.
-- **Source / provenance:** built by `src/ai_on_wikipedia/frame.py` from the WP1 snapshot, MediaWiki `pageprops` (English title → QID, following redirects), Wikidata `wbgetentities` sitelinks, and MediaWiki title → page ID lookups.
+- **Source / provenance:** built by `src/ai_on_wikipedia/frame.py` from the WP1 snapshot. Titles → QIDs by exact English sitelink name through the Wikidata Query Service (WDQS), with the MediaWiki Action API (`pageprops`, following redirects) for titles WDQS cannot match. Sitelinks come from WDQS, with Wikidata `wbgetentities` for items outside the main WDQS graph (scholarly works since the 2025 graph split). Page IDs come from MediaWiki title lookups (skipped with `--skip-page-ids`).
 - **Input license:** CC BY-SA 4.0 (Wikipedia) and CC0 (Wikidata). **Sensitivity:** public. **Update cadence:** per run.
-- **Row count (as obtained):** expected from the 2026-10-09 exploratory counts: 1,212 items / 5,914 rows (en 1,209 · zh 370 · ko 365 · fr 357 · es 346 · fa 319 · ar 312 · ja 281 · ru 273 · pt 270 · uk 260 · de 259 · id 221 · it 182 · pl 178 · tr 168 · vi 149 · cs 141 · nl 139 · sv 115); 184 core-importance items / 2,142 rows. Re-record from the pipeline's own output.
+- **Row count (as obtained):** pipeline run of 2026-10-09: 1,211 items / 5,928 rows (en 1,211 · zh 371 · ko 367 · fr 356 · es 346 · fa 320 · ar 313 · ja 282 · ru 274 · pt 271 · uk 262 · de 260 · id 221 · it 182 · pl 178 · tr 169 · vi 149 · cs 142 · nl 139 · sv 115); 183 core-importance items / 2,154 rows. Of the 1,246 WP1 titles, 1,200 matched a sitelink exactly, 18 resolved through redirects or normalization, and 28 have no Wikidata item. Counts drift with the live wikis: the frame reflects Wikipedia and Wikidata at build time, not at the WP1 snapshot.
 
 | Variable | Type | Units | Allowed values / range | Description | Missingness |
 | --- | --- | --- | --- | --- | --- |
 | `qid` | string | — | `Q[0-9]+` | Wikidata item; the cross-language unit of analysis | none (unmapped titles are dropped and counted) |
 | `wiki` | string | — | language code | Edition where the article exists | none |
 | `title` | string | — | — | Local title from the sitelink at build time | none |
-| `page_id` | Int64 | — | > 0 | Local page ID; joins to revisions | `<NA>` if the title did not resolve |
+| `page_id` | Int64 | — | > 0 | Local page ID; joins to revisions | `<NA>` if the title did not resolve, or for every row when built with `--skip-page-ids` |
 | `wp1_title` | string | — | — | English title as listed in the WP1 snapshot (before redirect resolution) | none |
 | `wp1_quality` | category | — | as in the WP1 snapshot, without `-Class` | English WikiProject quality rating | none |
 | `wp1_importance` | category | — | as in the WP1 snapshot, without `-Class` | English WikiProject importance rating | none (`Unknown` = not rated) |

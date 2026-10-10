@@ -1,10 +1,14 @@
 # LOI — JQD:DM Special Workflow Issue
 
-Due **2026-10-25** through "Submit a Letter of Inquiry" (journalqd.org/about/submissions; log in or register first). The journal sets no length or file format, so this version aims for roughly 900 words of plain text that can be pasted into the form. It answers the four required questions directly and in order. Frame sizes were computed on 2026-10-09 (`exploratory/frame_counts_2026-10-09/`). Status: **v1 draft with numbers, for the PI to edit.**
+Due **2026-10-25** through "Submit a Letter of Inquiry" (journalqd.org/about/submissions; log in or register first). The journal sets no length or file format; this version is plain text that can be pasted into the form. A 150-word abstract comes first, followed by direct answers to the four required questions, in order. The journal says an abstract is not a substitute for those answers, so the abstract supplements them and does not replace them. Frame sizes come from the pipeline's frame stage, run on 2026-10-09 (`snakemake data/processed/frame.parquet`). Status: **v1 draft with numbers, for the PI to edit.**
 
 **Working title:** Writing and Reading About AI: Production and Consumption of AI-Related Wikipedia Articles Across 20 Language Editions, 2020–2026
 
 ---
+
+**Abstract**
+
+Generative AI became a mass-audience topic after November 2022, and Wikipedia is a main place where the public documents and reads about it. We describe how Wikipedia's coverage of artificial intelligence changed across the 20 most-read language editions from November 2020 to September 2026. Our frame is the articles English Wikipedia's WikiProject Artificial Intelligence considers in scope: 1,211 topics with 5,928 articles across the 20 editions. Because every edition is measured on the same topics, the editions serve as comparisons for one another. Using public revision histories and pageview data, we describe coverage, revision activity, coauthorship, and readership before and after November 2022, and whether reading about AI kept pace with writing about it in each language. We treat November 2022 as a period boundary, not a cause, and report estimates with uncertainty. The result documents how unevenly reference knowledge about a consequential technology is produced and consumed across languages.
 
 **1. What is your research question, in one sentence?**
 
@@ -26,13 +30,13 @@ We report each measure by edition and by period, with bootstrap confidence inter
 
 **3. How is the sample constructed?**
 
-There is no authoritative list of "AI articles," so we use the judgment of the editors who maintain the topic. English Wikipedia's WikiProject Artificial Intelligence tags the articles its participants consider within scope and rates their quality and importance. A snapshot of its assessment list, taken 9 October 2026, contains 1,246 main-namespace pages. These resolve to 1,212 distinct Wikidata items; 27 pages have no item. Through Wikidata's cross-language links, these items have 5,914 articles across the 20 editions, from 1,209 in English to 115 in Swedish. Coverage is uneven: 39% of the topics have an article only in English, the median topic appears in two editions, and 49 appear in all 20.
+There is no authoritative list of "AI articles," so we use the judgment of the editors who maintain the topic. English Wikipedia's WikiProject Artificial Intelligence tags the articles its participants consider within scope and rates their quality and importance. A snapshot of its assessment list, taken 9 October 2026, contains 1,246 main-namespace pages. These resolve to 1,211 distinct Wikidata items; 28 pages have no item. Through Wikidata's cross-language links, these items have 5,928 articles across the 20 editions, from 1,211 in English to 115 in Swedish. Coverage is uneven: 39% of the topics have an article only in English, the median topic appears in two editions, and 49 appear in all 20.
 
 Holding the topic set fixed is what makes the editions comparable. Each edition is described on the same list of topics, so differences in coverage, editing, and readership between editions cannot come from different definitions of "AI." This cross-edition comparison takes the place of a comparison with non-AI articles. We also report edition-wide totals of pageviews and edits as denominators, so that each edition's AI activity is read against its own overall trend.
 
 The cost of this design is that the topic set is defined by English Wikipedia. Topics covered only in other editions fall outside it. As a check on how much is missed, we crawled each edition's own artificial intelligence category and its immediate subcategories: about one in six of the topics filed there has no English article. We state this as a scope condition rather than correcting for it.
 
-*Relevance audit.* WikiProject tags are not perfectly precise; the list includes a few pages that are only loosely related to AI. We hand-code a simple random sample of 200 topics for whether each is substantively about AI and report the frame's precision with a 95% interval. We also check that our main results hold when the frame is restricted to the 184 topics the WikiProject rates as being of top, high, or mid importance (2,142 articles across the 20 editions).
+*Relevance audit.* WikiProject tags are not perfectly precise; the list includes a few pages that are only loosely related to AI. We hand-code a simple random sample of 200 topics for whether each is substantively about AI and report the frame's precision with a 95% interval. We also check that our main results hold when the frame is restricted to the 183 topics the WikiProject rates as being of top, high, or mid importance (2,154 articles across the 20 editions).
 
 *Editions.* We include the 20 editions with the most human pageviews in October 2022, the last month before the split: English, Japanese, Spanish, Russian, French, German, Italian, Chinese, Portuguese, Arabic, Persian, Polish, Turkish, Dutch, Indonesian, Ukrainian, Swedish, Czech, Vietnamese, and Korean. Ranking by readership rather than article count excludes editions whose size comes mostly from automatically generated articles. The ranking is tight near the cutoff (the 19th through 22nd editions are within 12% of one another), so we will show that results do not depend on which edition takes the last slot.
 

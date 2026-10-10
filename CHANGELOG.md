@@ -11,6 +11,7 @@ All notable changes to AI on Wikipedia are recorded here. Format follows [Keep a
 - Research design memo, LOI draft, and the JQD:DM LaTeX manuscript template.
 
 ### Changed
+- Frame stage ported to the Wikidata Query Service: exact-title matching and sitelinks in bulk SPARQL queries, with the Action API only for redirects, out-of-graph (scholarly) items, and page IDs (`--skip-page-ids` to omit). The pipeline frame is 1,211 items / 5,928 articles; the LOI and design memo now cite it.
 - Sampling frame narrowed to the English WikiProject Artificial Intelligence article set mapped across 20 editions (PI decision, 2026-10-09). The category-union frame, `categories.py`, and its pipeline rule are removed. The relevance audit is now a 200-item simple random sample, with a core-importance robustness subset. No non-AI baseline: the cross-edition comparison on a fixed topic set serves that role.
 
 ### Deprecated
