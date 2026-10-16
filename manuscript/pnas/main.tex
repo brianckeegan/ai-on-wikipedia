@@ -1,0 +1,135 @@
+\documentclass[9pt,twocolumn,twoside]{pnas-new}
+% PNAS research article skeleton for the AI-on-Wikipedia project.
+% Status: OUTLINE v0 (2026-10-16). The section plan lives in OUTLINE.md; bracketed [X]
+% values come from the pipeline (results/). Build with pdflatex + bibtex (latexmk -pdf main.tex).
+
+\articletype{Social Sciences}% Proposed: Social Sciences, dual with Computer Sciences (confirm in PNAScentral)
+
+\templatetype{pnasresearcharticle}
+
+\begin{document}
+
+\title{Attention outpaces authorship: how the world's encyclopedia documented generative AI}
+
+% PNAS review is not double-anonymized; affiliations and contact details are TODO.
+\author[a,1]{Brian C. Keegan}
+\affil[a]{[Department, institution, city, state, ZIP, country --- TODO]}
+
+\leadauthor{Keegan}
+
+\significancestatement{Wikipedia is where much of the world reads about new technologies, and it is also a main source of the text that AI systems learn from. We measured how 20 of Wikipedia's largest language communities wrote and read about artificial intelligence from 2020 to 2026. Reading about AI rose in every language, but writing about it did not keep pace: [most] new and revised AI articles were written in English by a small group of editors, and other languages often received translated copies months later. The gap between who reads and who writes about AI shows how unevenly reliable knowledge about a consequential technology is produced, and it identifies where the shared knowledge base that AI depends on is thinnest.}
+
+\authorcontributions{[TODO: CRediT-style contributions.]}
+\authordeclaration{The author declares no competing interests. [Confirm.]}
+\correspondingauthor{\textsuperscript{1}To whom correspondence should be addressed. E-mail: [TODO]}
+
+\keywords{Wikipedia $|$ generative AI $|$ knowledge commons $|$ multilingual $|$ peer production}
+
+\begin{abstract}
+% Target <= 250 words, one paragraph. Skeleton; numbers in [brackets] come from results/.
+Wikipedia is among the most consulted reference works in the world and a primary source of training and grounding data for large language models. After November 2022, artificial intelligence itself became a topic that hundreds of millions of people looked up. Studies of Wikipedia since then have examined its overall traffic and editing, mostly in English, but not how its language communities documented AI. We followed 1,211 topics that English Wikipedia's WikiProject Artificial Intelligence considers in scope across the 20 most-read language editions (5,928 articles), from November 2020 to September 2026, using complete public revision histories and human pageviews. Attention to these articles rose [X]-fold, with increases in every edition, ranging from [X] to [X]. Authorship grew [less]: edits rose [X]-fold and distinct editors [X]-fold, concentrated in [English and N other editions], and the most active [1\%] of editors made [X]\% of all edits. Of non-English AI articles created after November 2022, [X]\% began as translations from English, with a median lag of [X] months. The result is a widening gap between where people read about a consequential technology and where knowledge about it is written. [Implication sentence: access to reliable information about AI across languages, and the multilingual text from which AI systems learn.]
+\end{abstract}
+
+\dates{This manuscript was compiled on \today}
+\doi{\url{www.pnas.org/cgi/doi/10.1073/pnas.XXXXXXXXXX}}
+
+\maketitle
+\thispagestyle{firststyle}
+\ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
+
+\Firstpage
+% \Firstpage keeps the first-page column width until \Endparasplit (below); move
+% \Endparasplit to the paragraph that ends page 1 once the introduction is drafted.
+
+% ---------------------------------------------------------------------------------------
+% INTRODUCTION (~700 words; no heading). See OUTLINE.md, "Introduction".
+% ---------------------------------------------------------------------------------------
+\dropcap{W}ikipedia is [hook: scale of readership; role as training and grounding data for language models; AI's arrival as a mass-audience topic after November 2022].
+
+[What is known: language editions cover different topics and cover shared topics differently \cite{hecht2010tower,callahan2011cultural,roy2022asymmetry}; breaking-news topics draw bursty, concentrated collaboration \cite{keegan2013hot}; Wikipedia's value is bound up with search and other platforms \cite{mcmahon2017interdependence,vincent2018examining,okoli2014readers}; recent work asks whether generative AI erodes Wikipedia's readership and contributors \cite{reeves2024chatgpt,lyu2025wikipedia,wagner2025death} and how much new content is machine-written \cite{brooks2024rise}.]
+
+[Gap: prior work studies Wikipedia in general after ChatGPT; none measures how its language communities documented AI itself, or compares who reads that coverage with who writes it.]
+
+[This paper: a fixed topic set followed across 20 editions makes production and consumption comparable across languages. Q1 coverage; Q2 attention versus authorship; Q3 concentration and translation dependence. November 2022 is a period boundary, not a treatment.]\Endparasplit
+
+% ---------------------------------------------------------------------------------------
+\section*{Results}
+% ~1,800 words; four subsections, one display item each.
+% ---------------------------------------------------------------------------------------
+
+\subsection*{A shared topic set, unevenly covered}
+The frame contains 1,211 topics with 5,928 articles across the 20 editions, from 1,211 in English to 115 in Swedish. Coverage is uneven: 39\% of topics have an article only in English, the median topic appears in two editions, and 49 appear in all 20 (Fig.~\ref{fig:coverage}). [Coverage trajectories before and after November 2022; entrants versus incumbents; lag from English creation to other editions.]
+
+\begin{figure*}[t]
+\centering
+\fbox{\parbox[c][5cm][c]{0.95\textwidth}{\centering\sffamily Figure 1 placeholder (17.8 cm). (A) Topic $\times$ edition coverage matrix. (B) Cumulative frame articles per edition, November 2022 marked. (C) Share of each edition's AI articles created after November 2022.}}
+\caption{A shared topic set, unevenly covered. [Legend: data sources, sample sizes, what the marks encode.]}
+\label{fig:coverage}
+\end{figure*}
+
+\subsection*{Attention rose everywhere}
+[Monthly human pageviews to frame articles and their share of each edition's total human pageviews, pre versus post, with bootstrap 95\% CIs (Fig.~\ref{fig:attention}). Note the automated-traffic reclassification; sensitivity in SI Appendix.]
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][4cm][c]{0.95\linewidth}{\centering\sffamily Figure 2 placeholder (11.4 cm). (A) Indexed monthly views by edition. (B) Post/pre ratio of AI share of edition views, 95\% CIs.}}
+\caption{Attention to AI articles rose in every edition. [Legend.]}
+\label{fig:attention}
+\end{figure}
+
+\subsection*{Authorship concentrated}
+[Edits, distinct and new editors per article-month; concentration of edits (Gini, top-1\% share); anonymous, temporary, and bot shares; editors active in several editions (Fig.~\ref{fig:authorship}). Temporary-account break in 2025 reported by edition.]
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][4cm][c]{0.95\linewidth}{\centering\sffamily Figure 3 placeholder (8.7 cm). (A) Editors per article-month, pre vs.\ post, by edition. (B) Concentration curves of edits.}}
+\caption{Authorship of AI articles grew less evenly than attention. [Legend.]}
+\label{fig:authorship}
+\end{figure}
+
+\subsection*{The attention--authorship gap}
+[Headline estimand per edition: $\Delta\log(\text{attention}) - \Delta\log(\text{authorship})$ between periods with article-cluster bootstrap CIs; Content Translation share and median lag for post-period non-English creations (Fig.~\ref{fig:gap}). Robustness to the core-importance subset (183 topics, 2,142 articles), the 20th-edition swap, and edition weighting in SI Appendix.]
+
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][4cm][c]{0.95\linewidth}{\centering\sffamily Figure 4 placeholder (11.4 cm). (A) $\Delta$attention vs.\ $\Delta$authorship by edition, 45$^\circ$ line, 95\% CIs. (B) Translation share and median lag by edition.}}
+\caption{Where people read about AI and where it is written. [Legend.]}
+\label{fig:gap}
+\end{figure}
+
+% ---------------------------------------------------------------------------------------
+\section*{Discussion}
+% ~700 words.
+% ---------------------------------------------------------------------------------------
+[Restate the gap. Access: readers in many languages meet thinner, later, translated coverage of a technology that affects them. AI: Wikipedia is upstream of language models, so gaps in non-English AI coverage are gaps in the multilingual text those models learn from (an implication, not a measured effect). Limits: no causal attribution to ChatGPT or any other event; the English-defined frame misses topics covered only outside English (an exploratory crawl found 17\% of topics in other editions' AI categories have no English article); survivorship; pageview classification. What would help: translation tooling, cross-edition recruitment, attention-weighted priorities for missing articles \cite{wulczyn2016growing}.]
+
+% ---------------------------------------------------------------------------------------
+\matmethods{
+% ~800 words in the main text; full details in SI Appendix.
+\subsection*{Sampling frame}
+The frame is the set of main-namespace pages in the assessment list of English Wikipedia's WikiProject Artificial Intelligence, retrieved on 9 October 2026 \cite{wp1_ai_snapshot}: 1,246 pages, resolving to 1,211 Wikidata items (28 pages have none). Items are mapped to their articles in each edition through Wikidata sitelinks retrieved from the Wikidata Query Service. [Relevance audit of 200 random topics: precision and 95\% CI. Core-importance subset: Top, High, or Mid importance.]
+
+\subsection*{Language editions}
+The 20 editions with the most human pageviews in October 2022, the last month before the period boundary. [Cutoff sensitivity in SI Appendix.]
+
+\subsection*{Data}
+Revision histories, editor metadata, identity reverts, and change tags come from the MediaWiki history dumps (snapshot 2026-09) \cite{wikimedia_mwhistory}; daily pageviews classified as user traffic come from the Wikimedia REST API \cite{wikimedia_pageviews}.
+
+\subsection*{Measures and estimation}
+[Article-month panel as in the project data dictionary. Pre (November 2020--October 2022) versus post (November 2022--September 2026) comparisons on the log scale; article-cluster bootstrap CIs; pooled estimates with editions weighted equally and by readership; segmented trends as a descriptive check.]
+
+\subsection*{Ethics and privacy}
+[Public trace data; editor identifiers pseudonymized with a keyed hash at ingest; only aggregates released. IRB determination: TODO (confirm and state).]
+}
+
+\showmatmethods{}
+
+\dataavail{[Aggregate article-month and edition-month panels, the frame snapshot, and all code will be deposited in a public repository with a DOI at publication. Raw inputs are public Wikimedia dumps and APIs, cited above. No editor-level data will be released.]}
+
+\acknow{[Acknowledgments and funding. Disclose AI-assisted drafting and coding as PNAS policy requires.]}
+
+\showacknow{}
+
+\bibliography{references}
+
+\end{document}
