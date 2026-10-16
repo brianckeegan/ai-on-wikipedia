@@ -21,7 +21,9 @@ jobs:
       # legitimately reference secrets or inputs are not flagged as unfilled tokens.
       - name: Check for unfilled template tokens
         run: |
-          if grep -rIn --exclude-dir=.git -P '(?<![$])[{][{]' .; then
+          # Vendored LaTeX class/style files (e.g. manuscript/pnas/pnas-new.cls) legitimately contain the
+          # marker, so they are excluded; project-authored files (.tex, .bib, .md, .py, ...) are still checked.
+          if grep -rIn --exclude-dir=.git --exclude='*.cls' --exclude='*.sty' --exclude='*.bst' --exclude='*.ldf' -P '(?<![$])[{][{]' .; then
             echo "::error::Unfilled template tokens found (see matches above). Fill or remove them before merging."
             exit 1
           fi

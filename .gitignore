@@ -42,13 +42,16 @@ secrets.yaml
 .snakemake/
 
 # LaTeX build products
-manuscript/*.aux
-manuscript/*.bbl
-manuscript/*.blg
-manuscript/*.log
-manuscript/*.out
-manuscript/*.pdf
-manuscript/*.synctex.gz
+manuscript/**/*.aux
+manuscript/**/*.bbl
+manuscript/**/*.blg
+manuscript/**/*.log
+manuscript/**/*.out
+manuscript/**/*.pdf
+manuscript/**/*.synctex.gz
+manuscript/**/*.fls
+manuscript/**/*.fdb_latexmk
+!manuscript/pnas/figures/*.pdf
 
 # Notebook cruft — clear outputs before committing
 .ipynb_checkpoints/

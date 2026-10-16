@@ -21,6 +21,7 @@ The tasks the current level created. Each row is a checkbox you can assign and t
 | [ ] | Implement the panel and describe stages | Data engineer | high | L | `article_month.parquet` matches the schema in `DATA-DICTIONARY.md`, and `summary_by_wiki_period.csv` reports bootstrap intervals | no | L2 | `src/ai_on_wikipedia/panel.py`, `describe.py` |
 | [x] | Get CI green | Data engineer | med | S | The token guard, ruff, pytest, and `snakemake -n` pass on the PR | no | L2 | `.github/workflows/ci.yml` |
 | [ ] | Fill the data dictionary after the first full run | PI | med | S | Every `<N …>` placeholder in `DATA-DICTIONARY.md` is replaced with observed counts | no | L2 | `DATA-DICTIONARY.md` |
+| [ ] | Decide how the PNAS article relates to the JQD:DM paper | PI | high | S | One of the routes in `manuscript/pnas/OUTLINE.md` (distinct contributions, PNAS only, JQD:DM only) is chosen, and the decision and the two journals' related-manuscript policies are recorded in `decision-log.md` | yes — before drafting the PNAS paper past the outline | L2 | `manuscript/pnas/OUTLINE.md` |
 
 **Tracking:** this checklist is the source of truth for the current level's work.
 

@@ -5,6 +5,7 @@ All notable changes to AI on Wikipedia are recorded here. Format follows [Keep a
 ## [Unreleased]
 
 ### Added
+- `manuscript/pnas/`: outline (`OUTLINE.md`) and LaTeX skeleton (`main.tex`, `references.bib`) for a PNAS research article, with the PNAS two-column template class files vendored unchanged. The CI token guard skips vendored `.cls/.sty/.bst/.ldf` files.
 - Initial project scaffold (level L2) via the CUPIDS Lab `data-project` skill.
 - Sampling frame built from the pinned WP1 snapshot `data/raw/wp1_artificial_intelligence_2026-10-09.tsv`.
 - Snakemake pipeline with working stages for language ranking, category crawl, frame construction, relevance-audit sampling, dump download, and pageviews; stubs for revisions, panel, and describe.
